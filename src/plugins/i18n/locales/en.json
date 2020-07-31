@@ -1,0 +1,31 @@
+{
+  "global": {
+    "reset": "Reset",
+    "type_to_search": "Type to search",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "nav": {
+    "projects": "Projects"
+  },
+  "auth": {
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+    "logout": "Logout",
+    "invalidLogin": "Invalid username or password"
+  },
+  "project": {
+    "createNew": "Create new project",
+    "welcome": "Welcome to project",
+    "id": "Id",
+    "title": "Title",
+    "numberOfDocuments": "Number of documents",
+    "status": "Status",
+    "empty_list": "There are no projects yet. Click create button to create a new one.",
+    "new": {
+      "create": "Create",
+      "title_placeholder": "Project title"
+    }
+  }
+}
