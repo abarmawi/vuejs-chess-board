@@ -22,7 +22,7 @@ export interface ChessFile {
 
 export type ChessBoard = ChessFile[]
 
-export const getFileCells = (fileStartColor: ChessColors): ChessCell[] => {
+const getFileCells = (fileStartColor: ChessColors): ChessCell[] => {
   const getOppositeColor = () => (fileStartColor == 'black' ? 'white' : 'black')
   const getPiceColor = (row: number) =>
     row == 1 || row == 2 ? 'white' : 'black'
