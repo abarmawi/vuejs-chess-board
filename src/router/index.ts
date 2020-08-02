@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import { routes as homeRoutes } from '@/modules/home/routes'
+import { routes as homeRoutes } from '@/modules/board/routes'
 
 Vue.use(VueRouter)
 

@@ -17,7 +17,6 @@ const AppModule = namespace('AppModule')
 export default class App extends Vue {
   @AppModule.State('isLoading') loading!: false
 }
-
 </script>
 
 <style lang="scss" scoped></style>
