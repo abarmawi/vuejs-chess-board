@@ -1,8 +1,20 @@
 <template>
-  <div class="cell" :class="{ black: isBlackCell }">
-    <span :id="spanId" class="movable" draggable="true" v-on:dragstart="drag">
-      {{ spanId }}
-    </span>
+  <div
+    :id="cellId"
+    class="cell"
+    :class="{ black: isBlack }"
+    v-on:drop="drop"
+    v-on:dragover="allowDrop"
+  >
+    <img
+      v-if="hasPice"
+      :src="chessPiceImg"
+      width="30"
+      height="30"
+      class="pice movable"
+      :id="piceId"
+      v-on:dragstart="drag"
+    />
   </div>
 </template>
 
@@ -10,20 +22,49 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Prop } from 'vue-property-decorator'
+import { ChessCell } from '../ChessBoardSetup'
 
 @Component({})
 export default class Cell extends Vue {
-  @Prop({ type: String, required: true }) identifier!: string
-  @Prop({ type: Number, required: true }) row!: number
-  @Prop({ type: Boolean, required: true }) isBlackCell!: boolean
+  @Prop({ required: true }) cell!: ChessCell
+  @Prop({ type: String, required: true }) fileId!: string
 
-  get spanId() {
-    return `${this.identifier}-${this.row}`
+  get isBlack() {
+    return this.cell.color == 'black'
+  }
+
+  get piceId() {
+    return `${this.cell.defaultPice}-${this.cell.piceColor}-${this.cellId}`
+  }
+
+  get cellId() {
+    return `${this.cell.id}-${this.fileId}`
+  }
+
+  get chessPiceImg() {
+    return require(`@/assets/imgs/${this.cell.defaultPice}-${this.cell.piceColor}.svg`)
+  }
+
+  get hasPice() {
+    return this.cell.defaultPice != 'non'
   }
 
   drag(ev: DragEvent) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    ev.dataTransfer!.setData('sourceId', this.spanId)
+    ev.dataTransfer!.setData('piceId', this.piceId)
+  }
+
+  allowDrop(ev: DragEvent) {
+    ev.preventDefault()
+  }
+
+  drop(ev: DragEvent) {
+    ev.preventDefault()
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const data = ev.dataTransfer!.getData('piceId')
+    const target = document.getElementById(this.cellId)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    target!.appendChild(document.getElementById(data)!)
   }
 }
 </script>
@@ -33,11 +74,20 @@ export default class Cell extends Vue {
   flex: 1;
   border-bottom: 0.1px solid black;
   border-width: thin;
+  background-color: #cec5c5;
 
   &.black {
-    background-color: black;
+    background-color: #0000008a;
     color: white;
     border-bottom: 0.1px solid white;
   }
+}
+
+.pice {
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  width: 50px;
+  height: 50px;
 }
 </style>
