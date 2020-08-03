@@ -20,6 +20,13 @@ export interface ChessFile {
   cells: ChessCell[]
 }
 
+export interface ChessMove {
+  sourceCell: string
+  targetCell: string
+  player: ChessColors
+  pice: ChessPieces
+}
+
 export type ChessBoard = ChessFile[]
 
 const getFileCells = (fileStartColor: ChessColors): ChessCell[] => {

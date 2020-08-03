@@ -51,7 +51,14 @@ export default class Cell extends Vue {
 
   drag(ev: DragEvent) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    ev.dataTransfer!.setData('piceId', this.piceId)
+    ev.dataTransfer!.setData(
+      'move',
+      JSON.stringify({
+        piceId: this.piceId,
+        player: this.cell.piceColor,
+        pice: this.cell.defaultPice,
+      })
+    )
   }
 
   allowDrop(ev: DragEvent) {
@@ -61,10 +68,17 @@ export default class Cell extends Vue {
   drop(ev: DragEvent) {
     ev.preventDefault()
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const data = ev.dataTransfer!.getData('piceId')
+    const move = JSON.parse(ev.dataTransfer!.getData('move'))
     const target = document.getElementById(this.cellId)
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    target!.appendChild(document.getElementById(data)!)
+    target!.appendChild(document.getElementById(move.piceId)!)
+
+    this.$parent.$parent.$parent.$emit('move', {
+      sourceCell: move.sourceCell,
+      targetCell: this.cellId,
+      player: move.player,
+      pice: move.pice,
+    })
   }
 }
 </script>
